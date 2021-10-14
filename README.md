@@ -101,5 +101,29 @@
 2) AuthLayout 에 다크모드 설정 추가
 	- 추후 다 추가할듯?
 	
-	
-	
+
+## 09 CRUD in web
+### 공통
+1) 자주 쓰는 쿼리 컬럼을 모아놓은 fragments js 생성
+2) token을 백엔드로 보내줄수 있도록 apollo 추가 코딩 필요
+	- backend 접근 uri인 httplink과 토큰 정보를 포함한 헤더 정보인 authlink 별도로 분리하기
+	- 파일을 업로드 할 수 있도록 apollo upload client 설치(npm install apollo-upload-client)
+	- 두 링크 별도로 만든 후 concat을 통해 합쳐서 서버에 전송
+### Home
+1) 모든 coffeeshop 정보를 볼 수 있도록 구현
+	- seeCoffeeShops query 추가
+2) 메인 화면 구성은 당근마켓 벤치마킹
+	- react-window 사용 (npm install react-window) -> 이거 못쓰겠다..
+3) 각 div는 board 파일로 구성
+### Add (insert)
+1) /add route 추가해서 등록 페이지 생성
+2) create coffee shop mutation 등록
+3) 파일 등록 후 메인 화면으로 이동
+### 상세페이지
+1) Home에서 id를 통해 상세 페이지 이동
+2) useparams를 통해 전달받은 id 값으로 상세 보기 쿼리 돌리기
+	- string, int 매개변수 형태 다시 한번 확인하기
+3) 수정 시 EditPage로 이동
+	- 수정은 일단 form만 만들어놓기 (파일 테스트가 좀 까다로울듯..?)
+4) 삭제 시 mutation 호출
+	- delete mutation 추가하기

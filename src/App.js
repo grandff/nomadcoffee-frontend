@@ -4,6 +4,9 @@ import Home from "./screens/Home";
 import Login from "./screens/Login";
 import NotFound from "./screens/NotFound";
 import SignUp from "./screens/SignUp";
+import Add from "./screens/Add";
+import ViewPage from "./screens/ViewPage";
+import EditPage from "./screens/EditPage";
 import { client, isLoggedInVar, darkModeVar } from "./apollo";
 import {ThemeProvider} from "styled-components";
 import {darkTheme, GlobalStyles, lightTheme} from "./styles";
@@ -28,6 +31,15 @@ function App() {
 									<SignUp />
 								</Route>
 							) : null}
+							<Route path="/add">
+								<Add />
+							</Route>
+							<Route path={`/shop/:id`}>
+								<ViewPage />
+							</Route>
+							<Route path={`/edit/:id`}>
+								<EditPage />
+							</Route>
 							<Route>
 								<NotFound />
 							</Route>

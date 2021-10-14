@@ -5,7 +5,7 @@ function PageTitle({title}) {
 	return (
 		<Helmet>
 			<title>
-				{title} | NomadCoffee
+				{`${title}`} | NomadCoffee
 			</title>
 		</Helmet>
 	);

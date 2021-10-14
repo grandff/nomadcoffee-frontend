@@ -1,4 +1,7 @@
 import { ApolloClient, InMemoryCache, makeVar } from "@apollo/client";
+import { createUploadLink } from "apollo-upload-client";
+import {setContext} from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
 
 const TOKEN = "TOKEN";	// 로그인 토큰 
 const DARK_MODE = "DARK_MODE";	// 다크모드
@@ -30,8 +33,37 @@ export const disableDarkMode = () => {
 	darkModeVar(false);
 }
 
-// apollo client 연결
-export const client = new ApolloClient({
+// 에러 발생시 확인하는 링크
+const onErrorLink = onError(({ graphQLErros, networkError }) => {
+  if (graphQLErros) {
+    // graphql error 발생 시
+    console.log("GraphQL Error", graphQLErros);
+  }
+
+  if (networkError) {
+    // network error 발생 시
+    console.log("Network Error", networkError);
+  }
+});
+
+// file 까지 포함한 backend 연결 url
+const uploadHttpLink = createUploadLink({
 	uri : "https://nomadcoffee-backend-kjm.herokuapp.com/graphql",
+	//uri : "https://instaclone-graphql.run.goorm.io/graphql",
+});
+
+// 토큰 정보 
+const authLink = setContext((_, {headers}) => {
+	return {
+		headers : {
+			...headers,
+			token : localStorage.getItem(TOKEN)
+		}
+	}
+});
+
+// apollo client 연결
+export const client = new ApolloClient({	
+	link : authLink.concat(onErrorLink).concat(uploadHttpLink),
 	cache: new InMemoryCache(),
-})
+});
