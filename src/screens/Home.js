@@ -71,7 +71,10 @@ function Home(){
 				</div>
 				<div>
 					이것저것 정보가 들어갈곳(하단)					
-				</div>				
+				</div>
+				<div>
+					<button onClick={logUserOut}>로그아웃</button>
+				</div>
 			</Footer>
 		</FrontLayout>		
 	);

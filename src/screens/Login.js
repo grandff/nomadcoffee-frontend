@@ -126,8 +126,8 @@ function Login(){
 						ref={register({
 							required: "아이디를 입력해주세요.",
 							minLength: {
-								value : 5,
-								message : "최소 5글자 이상 입력해주세요."
+								value : 3,
+								message : "최소 3글자 이상 입력해주세요."
 							},
 						})}
 						name="username"

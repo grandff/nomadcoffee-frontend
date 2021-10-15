@@ -125,5 +125,14 @@
 	- string, int 매개변수 형태 다시 한번 확인하기
 3) 수정 시 EditPage로 이동
 	- 수정은 일단 form만 만들어놓기 (파일 테스트가 좀 까다로울듯..?)
+	- 아직 연결 안해놨음!!
 4) 삭제 시 mutation 호출
 	- delete mutation 추가하기
+	- delete 완료 후 메인화면으로 이동
+	- 추후 마스터 권한을 가진 계정만 할 수 있도록 해야함
+	
+## 10 Deploy
+### netlify
+1) github 연결해서 deploy하기
+2) public 폴더에 _redirects 파일 생성하고 여기에 router 정보 입력
+3) node_env의 프로덕션 모드에 따른 uri 설정을 apollo.js 에 코딩
