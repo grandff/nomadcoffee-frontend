@@ -5,6 +5,7 @@ import { gql, useQuery } from "@apollo/client";
 import styled from "styled-components";
 import {SHOP_FRAGMENT, USER_FRAGMENT, PHOTO_FRAGMENT, CATEGORY_FRAGMENT} from "../fragments";
 import Board from "../components/feed/Board";
+import Footer from "../components/front/Footer";
 
 // see coffee shops query
 const FEED_QUERY = gql`
@@ -28,20 +29,17 @@ const FEED_QUERY = gql`
 	${CATEGORY_FRAGMENT}
 `;
 
-
-// 푸터
-const Footer = styled.div`
-	width : 100%;
-`;
-
 // body
 const Wrapper = styled.div`
-	max-width : 1000px;
+	max-width : 900px;
 	min-width : 800px;
 	width : 100%;
-	display : flex;		
-	flex-direction : column;	
-	padding : 10px;
+	display : inline-block;				
+	border : 1px solid #E9ECEF;	
+	border-radius : 8px;
+	margin-top : 20px;
+	background-color : white;
+	margin-bottom : 20px;
 `;
 
 
@@ -72,6 +70,7 @@ function Home(){
 				<div>
 					이것저것 정보가 들어갈곳(하단)					
 				</div>
+				<button>다크모드</button>
 				<div>
 					<button onClick={logUserOut}>로그아웃</button>
 				</div>

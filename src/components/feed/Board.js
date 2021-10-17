@@ -5,16 +5,18 @@ import styled from "styled-components";
 const Card = styled.div`
 	display : relative;
 	float : left;
-	width : 25%;
+	width : 31%;
 	margin : 10px;
 `;
 
 // 사용자 이름
 
 // 카페 이름
-const NameDiv = styled.div`
+const NameDiv = styled(Link)`
 	font-weight : bold;
 	font-size : 25px;
+	textDecoration : 'none';
+	color : black;
 `;
 
 // 카페 설명 란
@@ -29,20 +31,18 @@ const PhotoFile = styled.img`
 `;
 
 function Board({id, userId, name, caption, latitude, longitude, createdAt, updatedAt ,users, photos, categories}){
-	return (
-		<Link to = {`/shop/${id}`} style={{textDecoration : 'none', color : 'black'}}>
-			<Card key={id}>
-				<NameDiv>
-					{name}
-				</NameDiv>
-				{photos?.map((photo) => (
-				<PhotoFile src={photo.url} />
-				))}			
-				<CaptionDiv>
-					{caption}
-				</CaptionDiv>
-			</Card>
-		</Link>          		
+	return (		
+		<Card key={id}>			
+			{photos?.map((photo) => (
+			<PhotoFile src={photo.url} />
+			))}			
+			<NameDiv to = {`/shop/${id}`} >
+				{name}
+			</NameDiv>
+			<CaptionDiv>
+				{caption}
+			</CaptionDiv>
+		</Card>      		
 	)
 }
 
