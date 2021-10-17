@@ -14,33 +14,37 @@ const Card = styled.div`
 // 카페 이름
 const NameDiv = styled(Link)`
 	font-weight : bold;
-	font-size : 25px;
+	font-size : 16px;
 	textDecoration : 'none';
 	color : black;
 `;
 
 // 카페 설명 란
 const CaptionDiv = styled.div`
-
+	display: flex;
+    justify-content: space-between;
 `;
 
 // 사진 
 const PhotoFile = styled.img`
-	min-width : 100%;
-	max-width : 100%;
+	width : 278px;
+	height : 170px;	
 `;
 
-function Board({id, userId, name, caption, latitude, longitude, createdAt, updatedAt ,users, photos, categories}){
+function Board({id, userId, name, caption, latitude, longitude, createdAt, updatedAt ,user, photos, categories}){
+	
+	const dateTime = createdAt.split("T");	// 등록 날짜
 	return (		
 		<Card key={id}>			
 			{photos?.map((photo) => (
 			<PhotoFile src={photo.url} />
 			))}			
 			<NameDiv to = {`/shop/${id}`} >
-				{name}
+				{name.length >= 16 ? name.substring(0,16) + "..." : name}				
 			</NameDiv>
 			<CaptionDiv>
-				{caption}
+				<span>{user?.username}</span>
+				<span>{dateTime[0]}</span>				
 			</CaptionDiv>
 		</Card>      		
 	)

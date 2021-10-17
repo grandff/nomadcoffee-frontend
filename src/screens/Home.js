@@ -63,18 +63,7 @@ function Home(){
 					)
 				}
 			</Wrapper>
-			<Footer>
-				<div>
-					이것저것 정보가 들어갈곳(상단)
-				</div>
-				<div>
-					이것저것 정보가 들어갈곳(하단)					
-				</div>
-				<button>다크모드</button>
-				<div>
-					<button onClick={logUserOut}>로그아웃</button>
-				</div>
-			</Footer>
+			<Footer/>			
 		</FrontLayout>		
 	);
 }

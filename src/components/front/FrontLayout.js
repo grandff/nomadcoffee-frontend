@@ -49,8 +49,8 @@ function FrontLayout({children}){
 					<FontAwesomeIcon icon={faCoffee} size="3x"/>
 					<Title>
 						NomadCoffee
-					</Title>												
-				</LogoBox>				
+					</Title>		
+				</LogoBox>	
 				<SearchInput 
 					type="text"
 					maxlength="50"
