@@ -22,12 +22,10 @@ const Container = styled.div`
 `;
 
 // 헤더 버튼 박스
-const TopBtnBox = styled.div`
-	position : relative;
+const TopBtnBox = styled.div`	
 	width : 40%;
-	display : flex;
-	flex-direction : row;
-	justify-content : right;	
+	display : flex;	
+	justify-content : flex-end;		
 `;
 
 // 상단 로고 타이틀

@@ -18,6 +18,7 @@ const HeaderBtn = styled(Link)`
   justify-content : center;
   margin-left : 10px;
   font-size : 16px;
+	margin-right : 15px;
 `;
 
 

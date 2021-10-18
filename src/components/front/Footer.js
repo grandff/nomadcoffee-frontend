@@ -12,8 +12,8 @@ const SFooter = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding-top: 80px;
-    padding-bottom: 80px;
+    padding-top: 50px;
+    padding-bottom: 50px;
 	color : white;
 	font-size: 16px;
     font-weight: 700;
@@ -25,6 +25,7 @@ const SFooter = styled.div`
 	span {
 		margin-right : 20px;
 	}
+	bottom : 0;
 `;
 
 // 다크모드 버튼

@@ -6,6 +6,9 @@ import styled from "styled-components";
 import {SHOP_FRAGMENT, USER_FRAGMENT, PHOTO_FRAGMENT, CATEGORY_FRAGMENT} from "../fragments";
 import Board from "../components/feed/Board";
 import Footer from "../components/front/Footer";
+import Wrapper from "../components/front/Wrapper";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 // see coffee shops query
 const FEED_QUERY = gql`
@@ -29,19 +32,14 @@ const FEED_QUERY = gql`
 	${CATEGORY_FRAGMENT}
 `;
 
-// body
-const Wrapper = styled.div`
-	max-width : 900px;
-	min-width : 800px;
+const SpinnerBar = styled.div`
 	width : 100%;
-	display : inline-block;				
-	border : 1px solid #E9ECEF;	
-	border-radius : 8px;
-	margin-top : 20px;
-	background-color : white;
-	margin-bottom : 20px;
+	max-height : 100%;
+	min-height : 700px;
+	display : flex;
+	justify-content : center;
+	align-items : center;
 `;
-
 
 function Home(){		
 	// 전체 게시물 조회
@@ -56,7 +54,9 @@ function Home(){
 			<PageTitle title="메인"/>
 			<Wrapper>
 				{loading ? (
-					<h1>로딩중</h1>
+					<SpinnerBar>
+						<FontAwesomeIcon icon={faSpinner} spin size="5x" />					
+					</SpinnerBar>
 				) : 
 					data?.seeCoffeeShops?.map(
 						shop => <Board key={shop.id} {...shop}></Board>
