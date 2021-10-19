@@ -7,6 +7,8 @@ import PageTitle from "../components/PageTitle";
 import { useHistory } from "react-router-dom";
 import routes from "../routes";
 import {Link} from "react-router-dom";
+import Footer from "../components/front/Footer";
+import Wrapper from "../components/front/Wrapper";
 
 // see coffee shop
 const SEE_QUERY = gql`
@@ -49,6 +51,14 @@ const ViewContainer = styled.div`
 	flex-direction : column;
 	min-width : 600px;
 	max-width : 800px;
+	width : 100%;
+	border : 1px solid #E9ECEF;	
+	border-radius : 8px;
+	margin-top : 20px;
+	background-color : white;
+	margin-bottom : 20px;
+	min-height : 600px;
+	padding : 20px;
 `;
 
 // 사용자 정보 컨테이너
@@ -171,7 +181,8 @@ function ViewPage(){
 					<DelBtn onClick={deleteData}>삭제</DelBtn>
 					<ListBtn>목록</ListBtn>
 				</BtnContainer>
-			</ViewContainer>						
+			</ViewContainer>	
+			<Footer/>
 		</FrontLayout>
 		
 	)

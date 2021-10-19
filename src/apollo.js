@@ -1,4 +1,5 @@
 import { ApolloClient, InMemoryCache, makeVar } from "@apollo/client";
+import { offsetLimitPagination } from "@apollo/client/utilities";
 import { createUploadLink } from "apollo-upload-client";
 import {setContext} from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
@@ -64,8 +65,20 @@ const authLink = setContext((_, {headers}) => {
 	}
 });
 
+// merge 처리한 캐시
+// cache persist 기능을 구현하기 위해 cache를 expot 처리 해주는 것도
+export const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        seeCoffeeShops: offsetLimitPagination(),
+      },
+    },
+  },
+});
+
 // apollo client 연결
 export const client = new ApolloClient({	
 	link : authLink.concat(onErrorLink).concat(uploadHttpLink),
-	cache: new InMemoryCache(),
+	cache,
 });

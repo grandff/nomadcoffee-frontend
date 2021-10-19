@@ -1,7 +1,7 @@
 import FrontLayout from "../components/front/FrontLayout";
 import PageTitle from "../components/PageTitle";
 import { useForm } from "react-hook-form";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useApolloClient } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import routes from "../routes";
 import Footer from "../components/front/Footer";
@@ -48,34 +48,49 @@ const AddWrapper = styled.div`
 	padding : 20px;
 `;
 
+// add margin prop to Input
+const AddInput = styled(Input)`
+	margin-bottom : 20px;
+`;
+
+// file input 
+// https://webdir.tistory.com/435 참고해서 변경하기
+const FileInput = styled(Input)`
+	margin-bottom : 20px;
+`;
+
 // input label
 const InputLabel = styled.label`
 	font-size : 18px;
-	font-weight : bold;
-	margin-top: 15px;
+	font-weight : bold;	
+	margin-bottom : 10px;
 `;
 
 // add textarea
 const TextArea = styled.textarea`
 	width: 100%;
-  border-radius: 3px;
-  padding: 7px;
-  background-color: #fafafa;
+  	border-radius: 3px;
+  	padding: 7px;
+  	background-color: #fafafa;
 	border: 0.5px solid
-    ${(props) => (props.hasError ? "tomato" : props.theme.borderColor)};
-  margin-top: 5px;
-  box-sizing: border-box;
-  &::placeholder {
-    font-size: 12px;
-  }	
+    ${(props) => (props.hasError ? "tomato" : props.theme.borderColor)};  	
+  	box-sizing: border-box;
+  	&::placeholder {
+    	font-size: 12px;
+  	}	
     &:focus {
-    border-color: rgb(38, 38, 38);
-  }
-height : 120px;
-resize : none;
+    	border-color: rgb(38, 38, 38);
+  	}
+	height : 120px;
+	resize : none;
+	margin-bottom : 20px;
 `;
 
+
+
 function Add(){
+	const client = useApolloClient();	// oncompleted를 위한 cache 수정
+	
 	// add 완료 후 페이지 이동을 위해 history 호출
 	const history = useHistory();
 		
@@ -86,13 +101,26 @@ function Add(){
 	
 	// completed callback
 	const onCompleted = (data) => {
-		// get data
-		const {createCoffeeShop : {id}} = data;
-		if(!id){
-			alert("error");
-		}
+		// get data		
+		const { createCoffeeShop } = data;
 		
-		history.push(routes.home);
+		// cache 업데이트
+		if (createCoffeeShop.id) {
+			const { cache } = client;
+			cache.modify({
+				id : "ROOT_QUERY",
+				fields : {
+					seeCoffeeShops(prev) { 
+						return [createCoffeeShop, ...prev]; 
+					}, 
+				}
+			});
+			
+			// 메인화면으로 이동
+			history.push(routes.home);
+		}else{
+			alert("등록 중 오류가 발생했습니다.")
+		}				
 	}
 	
 	// create coffee shop mutation
@@ -131,7 +159,7 @@ function Add(){
 				<AddWrapper>
 				<form method="post" enctype="multipart/form-data" onSubmit={handleSubmit(onSubmitValid)}>
 					<InputLabel for="nameInput">카페 이름</InputLabel>
-					<Input 
+					<AddInput 
 						ref={register({
 							required : "카페 이름을 입력해주세요."
 						})}
@@ -150,7 +178,7 @@ function Add(){
 						id="captionArea"
 					/>					
 					<InputLabel for="latitudeInput">위도</InputLabel>
-					<Input 
+					<AddInput 
 						ref= {register}
 						type="text" 
 						name="latitude"
@@ -158,7 +186,7 @@ function Add(){
 						placeholder="위도" 
 					/>
 					<InputLabel for="longitudeInput">경도</InputLabel>
-					<Input 
+					<AddInput 
 						ref={register}
 						type="text" 
 						name="longitude"
@@ -166,7 +194,7 @@ function Add(){
 						placeholder="경도" 
 					/>
 					<InputLabel for="fileInput">카페 사진</InputLabel>
-					<input 
+					<FileInput
 						ref={register({
 							required : "카페 사진을 한장 이상 올려주세요."
 						})}
