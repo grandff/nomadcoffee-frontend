@@ -9,6 +9,7 @@ import routes from "../routes";
 import {Link} from "react-router-dom";
 import Footer from "../components/front/Footer";
 import Wrapper from "../components/front/Wrapper";
+import Separator from "../components/auth/Separator";
 
 // see coffee shop
 const SEE_QUERY = gql`
@@ -77,9 +78,6 @@ const UserName = styled.div``;
 
 // 작성자 아바타
 const UserAvater = styled.div``;
-
-// 줄긋는 영역
-const GubunArea = styled.div``;
 
 // 게시글 컨테이너
 const ShopContainer = styled.div`
@@ -158,12 +156,12 @@ function ViewPage(){
 		<FrontLayout>
 			<PageTitle title={pageTitle} />
 			<ViewContainer>
-				<UserContainer>
-					{data?.seeCoffeeShop?.photos.map((photo) => <CafeImage src={photo.url} />)}
+				{data?.seeCoffeeShop?.photos.map((photo) => <CafeImage src={photo.url} />)}
+				<UserContainer>					
 					<UserAvater>아바타 사진</UserAvater>
 					<UserName>{data?.seeCoffeeShop?.user.username}</UserName>					
 				</UserContainer>				
-				<GubunArea></GubunArea>
+				<Separator />				
 				<ShopContainer>
 					<TitleDiv>{data?.seeCoffeeShop?.name}</TitleDiv>
 					<CategoryDiv>
