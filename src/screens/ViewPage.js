@@ -9,7 +9,8 @@ import routes from "../routes";
 import {Link} from "react-router-dom";
 import Footer from "../components/front/Footer";
 import Wrapper from "../components/front/Wrapper";
-import Separator from "../components/auth/Separator";
+import BoardBtn from "../components/feed/BoardBtn";
+
 
 // see coffee shop
 const SEE_QUERY = gql`
@@ -64,7 +65,16 @@ const ViewContainer = styled.div`
 
 // 사용자 정보 컨테이너
 const UserContainer = styled.div`
-	
+	width : 100%;
+	display : flex;
+	margin-top : 20px;
+`;
+
+// 이름, 지역만 들어가는 서브 컨테이너
+const UserSubContainer = styled.div`
+	margin-left : 15px;
+	display : grid;
+	grid-gap : 12px;
 `;
 
 // 카페 사진
@@ -74,41 +84,93 @@ const CafeImage = styled.img`
 `;
 
 // 작성자 정보
-const UserName = styled.div``;
+const UserName = styled.div`
+	font-size : 15px;
+	font-weight : 600;
+`;
 
-// 작성자 아바타
-const UserAvater = styled.div``;
+// 작성자 지역
+const UserLocation = styled.div`
+	font-size : 13px;
+`;
+
+// 작성자 아바타 ?
+const UserImg = styled.img`
+	width : 40px;
+	height : 40px;
+`;
 
 // 게시글 컨테이너
 const ShopContainer = styled.div`
-	
+	width : 100%;
 `;
 
 // 제목 
-const TitleDiv = styled.div``;
+const TitleDiv = styled.div`
+	font-weight : 600;
+	font-size : 20px;
+`;
 
 // 카테고리 및 올린날짜
-const CategoryDiv = styled.div``;
+const CategoryDiv = styled.div`
+	color : #868E96;
+	font-size : 13px;
+`;
 
 // 내용
-const CtxDiv = styled.div``;
+const CtxDiv = styled.div`
+	margin-top : 16px;
+	margin-bottom : 16px;
+	font-size : 17px;
+`;
 
 // 버튼 컨테이너
-const BtnContainer = styled.div``;
-
-// 수정 버튼
-const EditBtn = styled.button``;
+const BtnContainer = styled.div`
+	width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+`;
 
 // 삭제 버튼
 const DelBtn = styled.button`
-	color : white;
+	border: none;
+  	border-radius: 4px;  
 	background-color : tomato;
-	width : 75px;
-	height : 25px;
+  	color: white;
+  	text-align: center;
+  	padding: 8px 0px;
+  	font-weight: 600;  
+  	width :80px;
+  	height : 35px;
+  	display : flex;
+  	align-items : center;
+  	justify-content : center;  	
+  	font-size : 16px;
+	margin-right : 10px;	
 `;
 
-// 목록 버튼
-const ListBtn = styled.button``;
+// 구분선
+const Separator = styled.div`
+  margin: 20px 0px 20px 0px;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  div {
+    width: 100%;
+    height: 1px;
+    background-color: ${(props) => props.theme.borderColor};
+  }
+  span {
+    margin: 0px 10px;
+    font-weight: 600;
+	font-size: 12px;
+    color: #8e8e8e;
+  }	
+`;
 
 function ViewPage(){	
 	const history = useHistory();	// 삭제 후 페이지 이동을 위해 history 호출		
@@ -157,13 +219,23 @@ function ViewPage(){
 			<PageTitle title={pageTitle} />
 			<ViewContainer>
 				{data?.seeCoffeeShop?.photos.map((photo) => <CafeImage src={photo.url} />)}
-				<UserContainer>					
-					<UserAvater>아바타 사진</UserAvater>
-					<UserName>{data?.seeCoffeeShop?.user.username}</UserName>					
+				<UserContainer>			
+					{data?.seeCoffeeShop?.user.avatarURL === null ? 
+						<UserImg src= {process.env.PUBLIC_URL + "/images/user.png"} alt="사람모양" /> : 
+						<UserImg src = {data?.seeCoffeeShop?.user.avatarUrl} alt="아바타사진" />
+					}
+					<UserSubContainer>
+						<UserName>{data?.seeCoffeeShop?.user.username}</UserName>		
+						<UserLocation>{data?.seeCoffeeShop?.user.location}</UserLocation>
+					</UserSubContainer>
 				</UserContainer>				
-				<Separator />				
+				<Separator>	
+					<div></div>
+				</Separator>
 				<ShopContainer>
-					<TitleDiv>{data?.seeCoffeeShop?.name}</TitleDiv>
+					<TitleDiv>
+						{data?.seeCoffeeShop?.name}
+					</TitleDiv>
 					<CategoryDiv>
 						카테고리 들어갈 영역
 						{data?.seeCoffeeShop?.createdAt}						
@@ -173,11 +245,17 @@ function ViewPage(){
 					</CtxDiv>
 				</ShopContainer>
 				<BtnContainer>
-					<Link to = {`/edit/${getId}`}>
-						수정
-					</Link>
+					<BoardBtn
+						cta = "수정"
+						color = "blue"
+						link = {`/edit/${getId}`}
+					/>					
 					<DelBtn onClick={deleteData}>삭제</DelBtn>
-					<ListBtn>목록</ListBtn>
+					<BoardBtn
+						cta = "목록"
+						color = "gray"
+						link = {`/`}
+					/>						
 				</BtnContainer>
 			</ViewContainer>	
 			<Footer/>

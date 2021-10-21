@@ -48,11 +48,10 @@ const onErrorLink = onError(({ graphQLErros, networkError }) => {
 });
 
 // file 까지 포함한 backend 연결 url
-const uploadHttpLink = createUploadLink({
-	// production 에 따른 분기 처리
-	uri : process.env.NODE_ENV === "production" ? "https://nomadcoffee-backend-kjm.herokuapp.com/graphql" : "https://instaclone-graphql.run.goorm.io/graphql"
+const uploadHttpLink = createUploadLink({	
+	//uri : process.env.NODE_ENV === "production" ? "https://nomadcoffee-backend-kjm.herokuapp.com/graphql" : "https://instaclone-graphql.run.goorm.io/graphql"
 	//uri : "https://nomadcoffee-backend-kjm.herokuapp.com/graphql",
-	//uri : "https://instaclone-graphql.run.goorm.io/graphql",
+	uri : "https://instaclone-graphql.run.goorm.io/graphql",	
 });
 
 // 토큰 정보 

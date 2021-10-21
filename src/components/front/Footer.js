@@ -12,8 +12,8 @@ const SFooter = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 53px;
+    padding-bottom: 53px;
 	color : white;
 	font-size: 16px;
     font-weight: 700;

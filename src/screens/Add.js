@@ -44,7 +44,8 @@ const AddWrapper = styled.div`
 	margin-top : 20px;
 	background-color : white;
 	margin-bottom : 20px;
-	min-height : 600px;
+	min-height : 700px;
+	max-height : 1000px;
 	padding : 20px;
 `;
 
